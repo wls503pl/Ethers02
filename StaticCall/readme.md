@@ -27,4 +27,81 @@ console.log(`Will this transaction succeed？：`, tx)
 - Function name: The name of the function to be called for simulation.
 - Parameters: The parameters with which the function is called.
 - {override}: Optional, can contain the following parameters:
-  - **from**: msg.sender during execution, that is, you can simulate anyone's call
+  - **from**: msg.sender during execution, that is, you can simulate anyone's call.
+  - **value**: msg.value at execution time.
+  - **blockTag**: block height at execution time.
+  - **gasPrice**
+  - **gasLimit**
+  - **nonnece**
+
+## Use staticCall to simulate DAI transfer
+
+1. Create **provider** and **wallet** object.
+
+```
+import { ethers } from "ethers";
+
+// Prepare Alchemy API
+const ALCHEMY_MAINNET_URL = 'https://eth-mainnet.alchemyapi.io/v2/2Pc6Ms3EX5OoAN9maUcmdhYkME-NAja6'
+const provider = new ethers.JsonRpcProvider(ALCHEMY_MAINNET_URL)
+
+// use private-key and provider to create wallet object
+const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b'
+const wallet = new ethers.Wallet(privateKey, provider)
+```
+
+2. Create a **DAI** contract object. Note that you should use **provider** instead of **wallet** when generating the contract. Otherwise, you cannot change the from in the ***staticCall*** method (it may be a bug or a feature).
+
+```
+// ABI of DAI
+const abiDAI = [
+    "function balanceOf(address) public view returns(uint)",
+    "function transfer(address, uint) public returns (bool)",
+];
+
+// Contract address of DAI (Main-Net)
+const addressDAI = '0x6B175474E89094C44Da98b954EedeAC495271d0F' // DAI Contract
+
+// Create a DAI contract instance
+const contractDAI = new ethers.Contract(addressDAI, abiDAI, provider)
+```
+
+3. Check the DAI balance in your wallet
+
+```
+const address = await wallet.getAddress()
+console.log("\n1. Read the DAI balance of the test wallet")
+const balanceDAI = await contractDAI.balanceOf(address)
+console.log(`DAI holdings: ${ethers.formatEther(balanceDAI)}\n')
+```
+<br>
+
+![]()<br>
+
+4. Use ***SstaticCall*** to call ***Transfer()*** function, fill in the from parameter with Vitalik's address to simulate Vitalik transferring 10,000 DAI. This transaction will succeed because Vitalik's wallet has sufficient DAI.
+
+```
+console.log("\n2. Use staticCall to try to call transfer to transfer 1 DAI, msg.sender is Vitalik's address")
+// Initiate a transaction
+const tx = await contractDAI.transfer.staticCall("vitalik.eth", ethers.parseEther("1"), {from: await provider.resolveName("vitalik.eth")})
+console.log(`Will this transaction succeed?`, tx)
+```
+<br>
+![]()<br>
+
+5. Use ***staticCall*** to call ***transfer()*** function, Fill in the **from** parameter with the test wallet address and simulate a transfer of 10,000 DAI. This transaction will fail, report an error, and return the reason \"Dai/insufficient-balance\".
+
+```
+console.log("\n3. Use staticCall to try to call transfer to transfer 10000 DAI, msg.sender is the test wallet address.")
+const tx2 = await contractDAI.transfer.staticCall("vitalik.eth", ethers.parseEther("10000"), {from: address})
+console.log(`Will this transaction succeed?`, tx2)
+```
+
+<br>
+![]()<br>
+
+<hr>
+
+# Summary
+
+**ethers.js** encapsulates *eth_call* in the *staticCall* method, which makes it easier for developers to simulate transaction results and avoid sending transactions that may fail. We used *staticCall* to simulate the transfer between Vitalik and the test wallet. Of course, this method has more uses, such as calculating the transaction slippage of Dogecoin.
