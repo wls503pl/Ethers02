@@ -7,6 +7,7 @@ The ***staticCall*** method belongs to the **ethers.Contract** class. Other simi
 
 Sending transactions on Ethereum requires expensive gas and has the risk of failure. Failed transactions will not have their gas returned to you. Therefore, it is very important to know which transactions may fail before sending them. If you have used the Metamask wallet, you will be familiar with the following picture.
 <br>
+
 ![PotentiallyFailedTransactions](https://github.com/wls503pl/Ethers02/blob/main/StaticCall/img/PotentiallyFailedTransactions.png)<br>
 
 If your transaction will fail, the metamask will tell you \"this transaction may fail\". When the user sees this red prompt, he knows to cancel the transaction.<br>
@@ -87,6 +88,7 @@ const tx = await contractDAI.transfer.staticCall("vitalik.eth", ethers.parseEthe
 console.log(`Will this transaction succeed?`, tx)
 ```
 <br>
+
 ![staticCall_succeed](https://github.com/wls503pl/Ethers02/blob/main/StaticCall/img/staticCall_succeed.png)<br>
 
 5. Use ***staticCall*** to call ***transfer()*** function, Fill in the **from** parameter with the test wallet address and simulate a transfer of 10,000 DAI. This transaction will fail, report an error, and return the reason \"Dai/insufficient-balance\".
@@ -98,6 +100,7 @@ console.log(`Will this transaction succeed?`, tx2)
 ```
 
 <br>
+
 ![staticCall_failed](https://github.com/wls503pl/Ethers02/blob/main/StaticCall/img/staticCall_failed.png)<br>
 
 <hr>
