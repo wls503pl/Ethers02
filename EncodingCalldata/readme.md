@@ -78,4 +78,63 @@ const contractWETH = new ethers.Contract(addressWETH, abiWETH, wallet)
 3. call ***balanceOf()*** function, read the WETH balance of wallet address.
 
 ```
+const address = await wallet.getAddress()
+
+// 1. Read WETH contract's on-chain information (WETH abi)
+console.log("\n1. Read balance of WETH")
+
+// encode calldata
+const param1 = contractWETH.interface.encodeFunctionData(
+  "balanceOf",
+  [address]
+);
+
+console.log(`encode result: ${param1}`)
+
+// create transaction
+const tx1 = {
+  to: addressWETH,
+  data: param1
+}
+
+// Initiate a transaction. Readable operations (view/pure) can be performed using provider.call(tx)
+const balanceWETH = await provider.call(tx1)
+console.log(`WETH holdings before deposit: ${ethers.formatEther(balanceWETH)}\n`)
 ```
+<br>
+
+![]()<br>
+
+4. Call the ***deposit()*** function to convert 0.001 ETH to 0.001 WETH, and print the transaction details and balance. You can see the balance change.
+
+```
+// encode calldata
+const param2 = contractWETH.interface.encodeFunctionData("deposit");
+console.log(`encode result: ${param2}`)
+
+// create transaction
+const tx2 = {
+  to: addressWETH,
+  data: param2,
+  value: ethers.parseEther("0.001")
+}
+
+// Initiate a transaction, write operation requires: wallet.sendTransaction(tx)
+const receipt1 = await wallet.sendTransaction(tx2)
+
+// Waiting for the transaction to be uploaded
+await receipt1.wait()
+console.log(`transaction details: `)
+console.log(receipt1)
+const balanceWETH_deposit = await contractWETH.balanceOf(address)
+console.log(`WETH position after deposit: ${ethers.formatEther(balanceWETH_deposit)}\n`)
+```
+<br>
+
+![]()<br>
+
+<hr>
+
+# Summary
+
+In this lecture, we introduced the interface class in **ethers.js** and used it to encode calldata to interact with the WETH contract. When interacting with some special contracts (such as proxy contracts), you need to use this method to encode parameters and then decode the return value.
