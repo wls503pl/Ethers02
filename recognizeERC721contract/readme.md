@@ -73,7 +73,7 @@ console.log(`name: ${nameERC721}`)
 console.log(`symbol: ${symbolERC721}`)
 ```
 <br>
-![]()<br>
+![readContractOnChainInfo](https://github.com/wls503pl/Ethers02/blob/main/recognizeERC721contract/img/readContractOnChainInfo.png)<br>
 
 4. Use the ***supportsInterface()*** function of ERC165 to identify whether the contract is ERC721 standard. If it is, it returns true; otherwise, it reports an error or returns false.
 
@@ -86,7 +86,7 @@ console.log("\n2. Use the supportsInterface of ERC165 to determine whether the c
 consol.log(`Is the contract ERC721 standard: ${isERC721}`)
 ```
 <br>
-![]()<br>
+![contractIsERC721orNot](https://github.com/wls503pl/Ethers02/blob/main/recognizeERC721contract/img/contractIsERC721orNot.png)<br>
 
 <hr>
 
