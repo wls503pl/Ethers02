@@ -103,7 +103,7 @@ console.log(`WETH holdings before deposit: ${ethers.formatEther(balanceWETH)}\n`
 ```
 <br>
 
-![]()<br>
+![ReadWETHBalance](https://github.com/wls503pl/Ethers02/blob/main/EncodingCalldata/img/ReadWETHBalance.png)<br>
 
 4. Call the ***deposit()*** function to convert 0.001 ETH to 0.001 WETH, and print the transaction details and balance. You can see the balance change.
 
@@ -131,7 +131,7 @@ console.log(`WETH position after deposit: ${ethers.formatEther(balanceWETH_depos
 ```
 <br>
 
-![]()<br>
+![callDepositFunction](https://github.com/wls503pl/Ethers02/blob/main/EncodingCalldata/img/callDepositFunction.png)<br>
 
 <hr>
 
