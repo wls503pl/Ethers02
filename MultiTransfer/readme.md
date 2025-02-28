@@ -32,7 +32,7 @@ console.log(hdNode)
 
 <br>
 
-![]()<br>
+![CreateHDWallet](https://github.com/wls503pl/Ethers02/blob/main/MultiTransfer/img/CreateHDWallet.png)<br>
 
 2. Using HD Wallet, generate 20 wallet addresses.
 
@@ -54,7 +54,7 @@ console.log(`Amount to send: ${amounts}`)
 ```
 <br>
 
-![]()<br>
+![derive20WalletAddress](https://github.com/wls503pl/Ethers02/blob/main/MultiTransfer/img/derive20WalletAddress.png)<br>
 
 3. Create provider and wallet, for usage of sending Tokens.
 
@@ -111,9 +111,6 @@ console.log(`WETH holdings: ${ethers.formatEther(balanceWETH)}\n`)
 const balanceETH = await provider.getBalance(addresses[10])
 console.log(`ETH holdings: ${ethers.formatEther(balanceETH)}\n`)
 ```
-<br>
-
-![]()<br>
 
 7. Call funciton ***multiTransferETH()***, transfer 0.0001 ETH to each wallet and you can see the balance changes after sending.
 
@@ -128,10 +125,6 @@ await tx.wait()
 const balanceETH2 = await provider.getBalance(addresses[10])
 console.log(`After sending, the wallet's ETH position: ${ethers.formatEther(balanceETH2)}\n`)
 ```
-
-<br>
-
-![]()<br>
 
 8. Call the ***multiTransferToken()*** function and transfer 0.0001 WETH to each wallet. You can see that the balance changes after sending.
 
@@ -150,10 +143,6 @@ await tx2.wait()
 const balanceWETH2 = await contractWETH.balanceOf(addresses[10])
 console.log(`After sending, the wallet's WETH position: ${ethers.formatEther(balanceWETH2)}\n`)
 ```
-
-<br>
-
-![]()<br>
 
 <hr>
 
