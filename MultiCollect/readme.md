@@ -43,9 +43,6 @@ const mnemonic = `air organ twist rule prison symptom jazz cheap rather dizzy ve
 const hdNode = ethers.HDNodeWallet.fromPhrase(mnemonic)
 console.log(hdNode)
 ```
-<br>
-
-![]()<br>
 
 4. Derive 20 wallets through HD wallets, and these wallets need to have assets.
 
@@ -67,10 +64,6 @@ const amounts = Array(20).fill(ethers.parseEther("0.0001"))
 console.log(`Send amount: ${amounts}`)
 ```
 
-<br>
-
-![]()<br>
-
 5. Read the ETH and WETH balances of an address.
 
 ```
@@ -82,10 +75,6 @@ console.log(`WETH Holdings: ${ethers.formatEther(balanceWETH)}`)
 const balanceETH = await provider.getBalance(wallets[19])
 console.log(`ETH持仓: ${ethers.formatEther(balanceETH)}\n`)
 ```
-
-<br>
-
-![]()<br>
 
 6. Use ***sendTransaction()*** of the wallet class to send transactions and collect the ETH in each wallet.
 
@@ -107,9 +96,6 @@ for (let i = 0; i < numWallet; i++)
 await tx.wait()
 console.log(`ETH collection completed`)
 ```
-<br>
-
-![]()<br>
 
 7. Connect the WETH contract to the new wallet, and then call the ***transfer()*** method to collect the WETH in each wallet.\
 
@@ -128,10 +114,6 @@ await tx.wait()
 console.log(`WETH collection completed`)
 ```
 
-<br>
-
-![]()<br>
-
 8. Read the ETH and WETH balances of an address after collection. You can see that the ETH and WETH balances have decreased, indicating a successful collection!
 
 ```
@@ -144,9 +126,6 @@ console.log(`WETH holdings after collection: ${ethersfromPhrase.formatEther(bala
 const balanceETHAfter = await provider.getBalance(wallets[19])
 console.log(`ETH holdings after collection: ${ethersfromPhrase.formatEther(balanceETHAfter)}\n`)
 ```
-<br>
-
-![]()<br>
 
 <hr>
 
