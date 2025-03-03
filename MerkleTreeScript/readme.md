@@ -8,7 +8,8 @@ This chapter, we will write a script that uses the Merkle Tree whitelist to mint
 **Merkle Tree** is a bottom-up encryption tree, where each leaf is the hash of the corresponding data, and each non-leaf is the hash of its two child nodes.
 <br>
 
-![]()<br>
+![merkleTreeStruct1](https://github.com/wls503pl/Ethers02/blob/main/MerkleTreeScript/img/merkleTreeStruct1.png)<br>
+![merkleTreeStruct2](https://github.com/wls503pl/Ethers02/blob/main/MerkleTreeScript/img/merkleTreeStruct2.png)<br>
 
 Merkle Tree allows for efficient and secure verification (Merkle Proof) of the contents of large data structures. For a Merkle Tree with N leaf nodes, if the root value is known, verifying whether a piece of data is valid (belonging to a Merkle Tree leaf node) only requires log(N) data (also called proof), which is very efficient. If the data is incorrect, or the proof provided is wrong, root cannot be restored.
 
@@ -73,7 +74,7 @@ Here, we take an example of using MerkleTree.js and ethers.js to verify the whit
 
 ```
 // 1. generate merkle tree
-console.log("\n1. 生成merkle tree")
+console.log("\n1. Generate merkle tree")
 // whitelist addresses
 const tokens = [
     "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", 
@@ -97,7 +98,7 @@ console.log(root)
 ```
 <br>
 
-![]()<br>
+![generateMerkleTree](https://github.com/wls503pl/Ethers02/blob/main/MerkleTreeScript/img/generateMerkleTree.png)<br>
 
 2. Create provider and wallet
 
@@ -140,7 +141,7 @@ console.log("The contract has been put on the chain")
 ```
 <br>
 
-![]()<br>
+![deployERC20token](https://github.com/wls503pl/Ethers02/blob/main/MerkleTreeScript/img/deployERC20token.png)<br>
 
 5. Call the ***mint()*** function, use the merkle tree to verify the whitelist, and mint the NFT for the 0th address. After the mint is successful, you can see that the NFT balance becomes 1.
 
@@ -155,7 +156,7 @@ console.log(`Mint succeeded, NFT balance of address ${tokens[0]}: ${await contra
 ```
 <br>
 
-![]()<br>
+![useWhitelistToMintNFT](https://github.com/wls503pl/Ethers02/blob/main/MerkleTreeScript/img/useWhitelistToMintNFT.png)<br>
 
 <hr>
 
