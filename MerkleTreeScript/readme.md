@@ -65,3 +65,109 @@ const tree = merkletree.getHexRoot()
 ```
 const proof = merkletree.getHexProof(leaf[0])
 ```
+
+## Whitelist Minting NFT
+
+Here, we take an example of using MerkleTree.js and ethers.js to verify the whitelist and mint NFT.
+1. Generate Merkle Tree
+
+```
+// 1. generate merkle tree
+console.log("\n1. 生成merkle tree")
+// whitelist addresses
+const tokens = [
+    "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4", 
+    "0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2",
+    "0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db",
+    "0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB"
+];
+// leaf, merkletree, proof
+const leaf       = tokens.map(x => ethers.keccak256(x))
+const merkletree = new MerkleTree(leaf, ethers.keccak256, { sortPairs: true });
+const proof      = merkletree.getHexProof(leaf[0]);
+const root = merkletree.getHexRoot()
+console.log("Leaf:")
+console.log(leaf)
+console.log("\nMerkleTree:")
+console.log(merkletree.toString())
+console.log("\nProof:")
+console.log(proof)
+console.log("\nRoot:")
+console.log(root)
+```
+<br>
+
+![]()<br>
+
+2. Create provider and wallet
+
+```
+// prepare alchemy API
+const ALCHEMY_GOERLI_URL = 'https://eth-sepolia.g.alchemy.com/v2/2Pc6Ms3EX5OoAN9maUcmdhYkME-NAja6';
+const provider = new ethers.JsonRpcProvider(ALCHEMY_GOERLI_URL);
+// use privateKey and provider to create wallet object
+const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b'
+const wallet = new ethers.Wallet(privateKey, provider)
+```
+
+3. Create Factory Contract, prepare to deploy the contract.
+
+```
+// 3. Create contract factory
+// abi of NFT
+const abiNFT = [
+    "constructor(string memory name, string memory symbol, bytes32 merkleroot)",
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function mint(address account, uint256 tokenId, bytes32[] calldata proof) external",
+    "function ownerOf(uint256) view returns (address)",
+    "function balanceOf(address) view returns (uint256)",
+];
+
+const bytecodeNFT = contractJson.default.object;
+const factoryNFT = new ethers.ContractFactory(abiNFT, bytecodeNFT, wallet);
+```
+4. Deploy NFT contracts using contractFactory.
+
+```
+console.log("\n2. Deploy NFT contracts by using contractFactory")
+// Deploy the contract and fill in the constructor parameters
+const contractNFT = await factoryNFT.deploy("WTF Merkle Tree", "WTF", root)
+console.log(`contract address: ${contractNFT.target}`);
+console.log("Waiting for the contract to be deployed on the chain")
+await contractNFT.waitForDeployment()
+console.log("The contract has been put on the chain")
+```
+<br>
+
+![]()<br>
+
+5. Call the ***mint()*** function, use the merkle tree to verify the whitelist, and mint the NFT for the 0th address. After the mint is successful, you can see that the NFT balance becomes 1.
+
+```
+console.log("\n3. Call the mint() function, use the merkle tree to verify the whitelist, and mint the NFT for the first address")
+console.log(`NFT name: ${await contractNFT.name()}`)
+console.log(`NFT symbol: ${await contractNFT.symbol()}`)
+let tx = await contractNFT.mint(tokens[0], "0", proof)
+console.log("In process of casting, waiting for transaction to be put on chain")
+await tx.wait()
+console.log(`Mint succeeded, NFT balance of address ${tokens[0]}: ${await contractNFT.balanceOf(tokens[0])}\n`)
+```
+<br>
+
+![]()<br>
+
+<hr>
+
+# For production environment
+
+The following steps are used to issue NFTs using Merkle Tree verification whitelist in a production environment:
+1. Determine the whitelist.
+2. Generate the Merkle Tree for the whitelist on the backend.
+3. Deploy the NFT contract and save the root of the Merkle Tree in the contract.
+4. When a user wants to mint, request the proof corresponding to the address from the backend.
+5. The user can then call the mint() function to mint the NFT.
+
+# Summary
+
+In this lesson, we introduced the Merkle Tree and used MerkleTree.js and ethers.js to create, validate whitelist, and mint NFTs.
