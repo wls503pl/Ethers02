@@ -85,3 +85,5 @@ const main = async () =>
         console.log("Sepolia Faucet: https://sepoliafaucet.com")
     }
 }
+
+main()
