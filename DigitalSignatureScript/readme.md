@@ -38,12 +38,12 @@ const msgHash = ethers.solidityPackedKeccak256(
 console.log(`msgHash：${msgHash}`)
 ```
 
-2. **Signature**: In order to prevent users from accidentally signing malicious transactions, EIP191 advocates adding "\x19Ethereum Signed Message:\n32" characters before the message, performing a keccak256 hash to obtain the Ethereum signature message,
-   and then signing it. The wallet class of **ethers.js** provides the ***signMessage()*** function to sign in accordance with the EIP191 standard. Note that if the message is of string type, it needs to be processed using the ***arrayify()*** function. Example:
+2. **Signature**: In order to prevent users from accidentally signing malicious transactions, EIP191 advocates adding "\x19Ethereum Signed Message:\n32" characters before the message, performing a keccak256 hash to obtain the Ethereum signature message, and then signing it. The wallet class of **ethers.js** provides the ***signMessage()*** function to sign in accordance with the EIP191 standard. Note that if the message is of string type, it needs to be processed using the ***arrayify()*** function. Example:
 ```
 // Signature
 const messageHashBytes = ethers.getBytes(msgHash)
 const signature = await wallet.signMessage(messageHashBytes)
-
+console.log(`signature：${signature}`)
+// Signature：0x390d704d7ab732ce034203599ee93dd5d3cb0d4d1d7c600ac11726659489773d559b12d220f99f41d17651b0c1c6a669d346a397f8541760d6b32a5725378b241c
 ```
    
