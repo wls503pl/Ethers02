@@ -6,9 +6,6 @@ In this chapter, we will introduce a method of using off-chain signatures as a w
 
 If you have used opensea to trade NFTs, you will be familiar with signatures. The image below shows the window that pops up when signing with the small fox (Metamask) wallet.
 It proves that you own the private key without needing to disclose it publicly.
-<br>
-
-![]()<br>
 
 The digital signature algorithm used by Ethereum is called the Dual Elliptic Curve Digital Signature Algorithm (ECDSA), which is a digital signature algorithm based on the dual elliptic curve "private key-public key" pair.<br>
 It mainly plays three roles:
@@ -80,10 +77,6 @@ const signature = await wallet.signMessage(messageHashBytes)
 console.log(`Signature：${signature}`)
 ```
 
-<br>
-
-![]()<br>
-
 3. Create Contract Factory, prepare for deploying NFT contracts
 
 ```
@@ -113,9 +106,6 @@ await contractNFT.waitForDeployment()
 // Could also use contractNFT.deployTransaction.wait()
 console.log("The contract has been on-chain")
 ```
-<br>
-
-![]()<br>
 
 5. Call the ***mint()*** function of the NFT contract, use the off-chain signature to verify the whitelist, and mint the NFT for the account address.
 
@@ -127,9 +117,6 @@ console.log("Minting, waiting for transaction to be put on chain")
 await tx.wait()
 console.log(`mint successful, NFT balance of address ${account}: ${await contractNFT.balanceOf(account)}\n`)
 ```
-<br>
-
-![]()<br>
 
 ## For production environment
 
