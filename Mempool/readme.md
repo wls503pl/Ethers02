@@ -34,3 +34,66 @@ console.log("\n1. connect wss RPC")
 const ALCHEMY_MAINNET_WSSURL = 'wss://ethereum-rpc.publicnode.com'
 const provider = new ethers.WebSocketProvider(ALCHEMY_MAINNET_WSSURL)
 ```
+
+2. Because there are many pending transactions in the mempool, hundreds of them per second, it is easy to reach the request limit of the free rpc node, so we need to use **throttle** to limit the request frequency.
+
+```
+function throttle(fn, delay)
+{
+  let timer;
+  return function()
+  {
+    if (!timer)
+    {
+      fn.apply(this, arguments)
+      timer = setTimeout(() => {
+        clearTimeout(timer)
+        timer = null
+      }, delay)
+    }
+  }
+}
+```
+
+3. Monitor the mempool for pending transactions and print the transaction hash.
+
+```
+let i = 0
+provider.on("pending", async (txHash) => {
+  if (txHash && i < 100)
+  {
+    // print hash
+    console.log(`[${(new Date).toLocaleTimeString()}] listening Pending transaction ${i} : ${txHash} \r`);
+    i++
+  }
+});
+```
+<br>
+
+![]()<br>
+
+4. Get the transaction details through the hash of the pending transaction. We can see that the transaction has not been put on the chain yet, and its blockHash, blockNumber, and transactionIndex are all empty.
+   However, we can obtain the sender address from, fuel fee gasPrice, target address to, sent ether amount value, sent data data and other information of the transaction. The robot uses this information to mine MEV.
+
+```
+let j = 0
+provider.on("pending", throttle(async (txHash) => {
+  if (txHash && j <= 100)
+  {
+    // Get tx details
+    let tx = await provider.getTransaction(txHash);
+    console.log(`\n[${(new Date).toLocaleTimeString()}] listening Pending transaction ${j}: ${txHash} \r`);
+    console.log(tx);
+    j++
+  }
+}, 1000));
+```
+<br>
+
+![]()<br>
+
+<hr>
+
+# Summary
+
+In this Chapter, we briefly introduced MEV and mempool, and wrote a script to monitor pending transactions in mempool.
