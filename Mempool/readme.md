@@ -11,6 +11,9 @@ It is a feast for scientists, a friend of mining farms, and a nightmare for reta
 
 Before a user's transaction is packaged into the Ethereum blockchain by miners, all transactions are collected in the Mempool (transaction memory pool).
 Miners also look for transactions with high gas prices and prioritize them for packaging to maximize their profits. Generally speaking, the higher the gas price, the easier it is to be packaged.
+<br>
+
+![MemoryPool](https://github.com/wls503pl/Ethers02/blob/main/Mempool/img/MemoryPool.png)
 
 At the same time, some MEV robots will also search for profitable transactions in the mempool. For example, a swap transaction with too high slippage may be attacked by a sandwich attack: by adjusting the gas,
 the robot will insert a buy order before the transaction and send a sell order after it, which is equivalent to selling the token to the user at a high price (front running).
@@ -70,7 +73,7 @@ provider.on("pending", async (txHash) => {
 ```
 <br>
 
-![]()<br>
+![Listening](https://github.com/wls503pl/Ethers02/blob/main/Mempool/img/Listening.png)<br>
 
 4. Get the transaction details through the hash of the pending transaction. We can see that the transaction has not been put on the chain yet, and its blockHash, blockNumber, and transactionIndex are all empty.
    However, we can obtain the sender address from, fuel fee gasPrice, target address to, sent ether amount value, sent data data and other information of the transaction. The robot uses this information to mine MEV.
@@ -90,7 +93,7 @@ provider.on("pending", throttle(async (txHash) => {
 ```
 <br>
 
-![]()<br>
+![TransactionResponse](https://github.com/wls503pl/Ethers02/blob/main/Mempool/img/TransactionResponse.png)<br>
 
 <hr>
 
