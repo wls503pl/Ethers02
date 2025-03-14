@@ -59,7 +59,7 @@ console.log(`Private key of beautiful account: ${wallet.privateKey}`)
 
 <br>
 
-![]()<br>
+![VanityAddress](https://github.com/wls503pl/Ethers02/blob/main/VanityAddress/img/vanityAddress.png)<br>
 
 ## Extension - Sequential Address Generation
 
