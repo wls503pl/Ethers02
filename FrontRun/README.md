@@ -35,3 +35,34 @@ Let’s practice and front-run a transaction to mint an NFT. The tools we will u
 - **Remix** for deployment and minting of NFT contracts.
 - The **etherjs** script monitors the mempool and performs front-running.
 
+1. **Start the Foundry local test chain**: After installing foundry, enter _**anvil --chain-id 1234 -b 10**_ in the command line to build a local test chain with chain-id 1234 and a block every 10 seconds. After the build is successful, it will display the addresses and private keys of some test accounts, each with 10,000 ETH. You can use them for testing.
+<br>
+
+![]()<br>
+![]()<br>
+![]()<br>
+
+2. **Connect Remix to the test chain**: Open the Remix deployment page, open the Environment drop-down menu in the upper left corner, and select Foundry Provider to connect Remix to the test chain.
+<br>
+
+![]()<br>
+![]()<br>
+
+3. **Deploy NFT contract**: Deploy a simple freemint (free minting) NFT contract on Remix. It has a _mint()_ for free minting NFT.
+
+4. **Deploy the ethers.js frontrunning script**: Simply put, the frontrun.js script listens to pending transactions in the test chain mempool, filters out transactions that call mint(), then copies it and increases the gas for frontrunning.
+
+5. **Call the mint() function**: Call the _mint()_ function of the Freemint contract on the Remix deployment page to mint NFT.
+
+6. **The script monitors the transaction and performs frontrunning**: We can see in the terminal that the **frontrun.js** script successfully monitors the transaction and performs frontrunning. If you call the _ownerOf()_ function of the NFT contract to check that the holder with tokenId 0 is the wallet address in the frontrunning script, it proves that the frontrunning was successful!
+
+## Prevention methods
+
+Front-running is a common problem on public chains such as Ethereum. We cannot eliminate it, but we can reduce the benefits of being front-runner by reducing the importance of transaction order or time:
+- Use a commit-reveal scheme.
+- With dark pools, transactions sent by users will not enter the public _mempool_, but directly go to miners. For example, **flashbots** and **TaiChi**.
+- Add protective parameters to the call parameters, such as (slippage protection)[https://uniswapv3book.com/milestone_3/slippage-protection.html], to reduce the potential gains of front-runners.
+
+# Summary
+
+In this Chapter, we introduced Ethereum's front-running, also known as preemption. This attack mode originated from the traditional financial industry and is easier to implement in the blockchain because all transaction information is public. We did a preemptive time: preempting a transaction to mint an NFT. When similar transactions are required, it is best to support hidden memory pools or implement restrictions such as batch auctions. It is a common problem on public chains such as Ethereum. We cannot eliminate it, but we can reduce the benefits of being preempted by reducing the importance of transaction order or time.
