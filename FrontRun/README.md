@@ -61,7 +61,7 @@ Let’s practice and front-run a transaction to mint an NFT. The tools we will u
 Front-running is a common problem on public chains such as Ethereum. We cannot eliminate it, but we can reduce the benefits of being front-runner by reducing the importance of transaction order or time:
 - Use a commit-reveal scheme.
 - With dark pools, transactions sent by users will not enter the public _mempool_, but directly go to miners. For example, **flashbots** and **TaiChi**.
-- Add protective parameters to the call parameters, such as (slippage protection)[https://uniswapv3book.com/milestone_3/slippage-protection.html], to reduce the potential gains of front-runners.
+- Add protective parameters to the call parameters, such as [slippage protection](https://uniswapv3book.com/milestone_3/slippage-protection.html), to reduce the potential gains of front-runners.
 
 # Summary
 
