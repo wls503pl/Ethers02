@@ -40,7 +40,7 @@ Let’s practice and front-run a transaction to mint an NFT. The tools we will u
 
 ![anvil](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil.png)<br>
 ![anvil1](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil1.png)<br>
-!anvil2](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil2.png)<br>
+![anvil2](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil2.png)<br>
 
 2. **Connect Remix to the test chain**: Open the Remix deployment page, open the Environment drop-down menu in the upper left corner, and select Foundry Provider to connect Remix to the test chain.
 <br>
