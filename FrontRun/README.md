@@ -38,15 +38,15 @@ Let’s practice and front-run a transaction to mint an NFT. The tools we will u
 1. **Start the Foundry local test chain**: After installing foundry, enter _**anvil --chain-id 1234 -b 10**_ in the command line to build a local test chain with chain-id 1234 and a block every 10 seconds. After the build is successful, it will display the addresses and private keys of some test accounts, each with 10,000 ETH. You can use them for testing.
 <br>
 
-![]()<br>
-![]()<br>
-![]()<br>
+![anvil](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil.png)<br>
+![anvil1](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil1.png)<br>
+!anvil2](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/anvil2.png)<br>
 
 2. **Connect Remix to the test chain**: Open the Remix deployment page, open the Environment drop-down menu in the upper left corner, and select Foundry Provider to connect Remix to the test chain.
 <br>
 
-![]()<br>
-![]()<br>
+![FoundryProvider](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/FoundryProvider.png)<br>
+![FoundryProvider2](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/FoundryProvider2.png)<br>
 
 3. **Deploy NFT contract**: Deploy a simple freemint (free minting) NFT contract on Remix. It has a _mint()_ for free minting NFT.
 
@@ -55,6 +55,9 @@ Let’s practice and front-run a transaction to mint an NFT. The tools we will u
 5. **Call the mint() function**: Call the _mint()_ function of the Freemint contract on the Remix deployment page to mint NFT.
 
 6. **The script monitors the transaction and performs frontrunning**: We can see in the terminal that the **frontrun.js** script successfully monitors the transaction and performs frontrunning. If you call the _ownerOf()_ function of the NFT contract to check that the holder with tokenId 0 is the wallet address in the frontrunning script, it proves that the frontrunning was successful!
+<br>
+
+![listenFrontRun](https://github.com/wls503pl/Ethers02/blob/main/FrontRun/img/listenFrontRun.png)
 
 ## Prevention methods
 
