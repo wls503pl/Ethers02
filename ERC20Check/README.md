@@ -100,7 +100,7 @@ The output is as follows:
 
 <br>
 
-![](br)
+![checkERC20](https://github.com/wls503pl/Ethers02/blob/main/ERC20Check/img/checkERC20.png)<br>
 
 The script successfully detects that the DAI contract is an ERC20 contract, but the BAYC contract is not an ERC20 contract.
 
